@@ -4,18 +4,51 @@
   <meta charset="UTF-8">
   <title>圖片按鈕播放音訊</title>
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      overflow: hidden; /* 禁止滾動 */
+    }
     body {
+      font-family: sans-serif;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px;
+      z-index: 10;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .container {
+      display: flex;
+      width: 200vw;
+      height: 100vh;
+      transition: transform 0.5s ease;
+    }
+    section {
+      width: 100vw;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      background-color: #f5f5f5;
+      flex-shrink: 0;
     }
     .circle-button {
       width: 400px;
       height: 400px;
       border-radius: 50%;
-      background-image: url('button-image-cropped.png');
       background-size: 100% 100%;
       background-position: center;
       background-repeat: no-repeat;
@@ -32,12 +65,37 @@
   </style>
 </head>
 <body>
-  <button class="circle-button" id="playBtn"></button>
-  <audio id="player" src="sound.mp3"></audio>
+  <nav>
+    <a href="#" onclick="goTo(0)">對</a>
+    <a href="#" onclick="goTo(1)">行</a>
+  </nav>
+
+  <div class="container" id="container">
+    <section id="dui">
+      <button class="circle-button" id="playBtn1" style="background-image: url('button-image-cropped.png');"></button>
+      <audio id="player1" src="sound.mp3"></audio>
+    </section>
+
+    <section id="xing">
+      <button class="circle-button" id="playBtn2" style="background-image: url('sure-removebg.png');"></button>
+      <audio id="player2" src="sure.mp3"></audio>
+    </section>
+  </div>
 
   <script>
-    document.getElementById('playBtn').addEventListener('click', () => {
-      const player = document.getElementById('player');
+    const container = document.getElementById('container');
+    function goTo(index) {
+      container.style.transform = `translateX(-${index * 100}vw)`;
+    }
+
+    document.getElementById('playBtn1').addEventListener('click', () => {
+      const player = document.getElementById('player1');
+      player.currentTime = 0;
+      player.play();
+    });
+
+    document.getElementById('playBtn2').addEventListener('click', () => {
+      const player = document.getElementById('player2');
       player.currentTime = 0;
       player.play();
     });
